@@ -38,16 +38,31 @@ AddressBook.prototype.deleteContact = function(id) {
 }
 
 // Business Logic for Contacts ---------
-function Contact(firstName, lastName, phoneNumber, email, physicalAddress) {
+function Contact(firstName, lastName, phoneNumber, email, addresses) {
   this.firstName = firstName;
   this.lastName = lastName;
   this.phoneNumber = phoneNumber;
   this.email = email;
-  this.physicalAddress = physicalAddress;
+  this.adresses = addresses;
 }
 
 Contact.prototype.fullName = function() {
   return this.firstName + " " + this.lastName;
+}
+
+//Business Logic for Adresses
+
+function Adresses() {
+  this.emailAddressess = [];
+  this.physicalAddresses = [];
+}
+
+Adresses.prototype.addEmailAddress = function(emailAddress) {
+  this.emailAddresses.push(emailAddress);
+}
+
+Adresses.prototype.addEmailAddress = function(phycsicalAddress) {
+  this.physicalAddresses.push(physicalAddress);
 }
 
 // User Interface Logic ---------
@@ -86,21 +101,68 @@ function attachContactListeners() {
   });
 };
 
+function addEmailInput(emailNum) {
+  emailNum++;
+  //use jQuery to insert new input field with id of "new-email-emailNum"
+  var newHTML = "";
+  //edit newHTML
+
+  newHTML += '<div class="form-group"> <label for="new-email-' + emailNum + '">Additional Email</label><input type="text"  class="form-control" id="new-email-' + emailNum + '"></div>';
+  console.log(newHTML);
+
+  var target = "";
+  target = 'new-email-';
+  target += (emailNum - 1);
+  target += ''
+  console.log(target);
+  $(`#${target}`).after(newHTML);
+
+  //insert
+
+
+
+ return emailNum;
+}
+function addAddressInput(addressNum) {
+  addressNum++;
+
+
+  return addressNum;
+}
+
+
 $(document).ready(function() {
+  var emailNum = 1;
+  var addressNum = 1;
   attachContactListeners();
+
+  // $("div").on("click","add-email-button",function () {
+  //   addEmailInput(emailNum)
+  // });
+  $("#add-email-button").click(addEmailInput(addressNum));
+
   $("form#new-contact").submit(function(event) {
     event.preventDefault();
     var inputtedFirstName = $("input#new-first-name").val();
     var inputtedLastName = $("input#new-last-name").val();
     var inputtedPhoneNumber = $("input#new-phone-number").val();
-    var inputtedEmail = $("input#new-email").val();
-    var inputtedPhysicalAddress = $("input#new-physical-address").val();
+    //get email addresses and store in arrays using emailNum and addressNum
+      //use for loop and # of input fields
+
     $("input#new-first-name").val("");
     $("input#new-last-name").val("");
     $("input#new-phone-number").val("");
-    $("input#new-email").val("");
+    $("input#new-email-1").val("");
     $("input#new-physical-address").val("");
+    //remove additional address boxes
+
+    //create addresses object
+
+    //push addresses from arrays to adresses object
+
+    //change to construct with addresses object
     var newContact = new Contact(inputtedFirstName, inputtedLastName, inputtedPhoneNumber,inputtedEmail,inputtedPhysicalAddress);
+
     addressBook.addContact(newContact);
     displayContactDetails(addressBook);
   })
