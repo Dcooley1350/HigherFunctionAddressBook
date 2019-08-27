@@ -42,7 +42,7 @@ function Contact(firstName, lastName, phoneNumber, addresses) {
   this.firstName = firstName;
   this.lastName = lastName;
   this.phoneNumber = phoneNumber;
-  this.adresses = addresses;
+  this.addresses = addresses;
 }
 
 Contact.prototype.fullName = function() {
@@ -52,7 +52,7 @@ Contact.prototype.fullName = function() {
 //Business Logic for Adresses
 
 function Adresses(emailAdresses, physicalAddress) {
-  this.emailAddressess = emailAdresses;
+  this.emailAddresses = emailAdresses;
   this.physicalAddresses = physicalAddress;
 }
 
@@ -82,8 +82,8 @@ function showContact(contactId) {
   $(".first-name").html(contact.firstName);
   $(".last-name").html(contact.lastName);
   $(".phone-number").html(contact.phoneNumber);
-  $(".email").html(contact.email);
-  $(".physical-address").html(contact.email);
+  $(".email").html(contact.addresses.emailAddresses);
+  $(".physical-address").html(contact.addresses.physicalAddresses);
   var buttons = $("#buttons");
   buttons.empty();
   buttons.append("<button class='deleteButton' id=" +  + contact.id + ">Delete</button>");
@@ -121,7 +121,7 @@ function captureEmails(emailNum) {
   var emails = [];
   for (var i = 1; i <= emailNum; i++) {
     var target = '#new-email-' + i;
-    emails.push($(target).val());
+    emails.push($(target).val()+ " ");
   }
   return emails;
 }
@@ -130,7 +130,7 @@ function capturePhysicalAddresses(addressNum) {
   var physicalAddresses = [];
   for (var i = 1; i <= addressNum; i++) {
     var target = '#new-address-' + i;
-    physicalAddresses.push($(target).val());
+    physicalAddresses.push($(target).val() + " ");
   }
   return physicalAddresses;
 }
@@ -175,7 +175,7 @@ $("#add-email-button").click(function() {
     $(".extra-fields").detach()
     //create addresses object
     var newAddress = new Adresses(emails, physicalAddresses);
-
+console.log(newAddress)
     //change to construct with addresses object
     var newContact = new Contact(inputtedFirstName, inputtedLastName, inputtedPhoneNumber,newAddress);
 
